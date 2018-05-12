@@ -59,7 +59,7 @@ void        Interactions :: calc_bumps( Particle A, Particle B )
 
 // Interactions.
 
-void        Interactions :: gravitate( Particles A, Particles B )
+void        Interactions :: gravitate( Particles A, Particles B, double zero )
 {
     for( int i = 0; i < A.size(); i++ ){
         for( int j = 0; j < B.size(); j++ ){
@@ -69,8 +69,19 @@ void        Interactions :: gravitate( Particles A, Particles B )
             if( _radial.mag() > 0.0 ){
 
                 A.acceleration(i).add(
-                    _radial.scaled( _G * B.mass(j) / pow(_radial.mag(), 3) )
+                    _radial.scaled(
+                        (_radial.mag() / (_radial.mag() + zero)) *
+                            _G * B.mass(j) / pow(_radial.mag(), 3)
+                    )
                 );
+
+                B.acceleration(i).add(
+                    _radial.scaled(
+                        (_radial.mag() / (_radial.mag() + zero)) *
+                            _G * A.mass(j) / pow(_radial.mag(), 3)
+                    )
+                );
+
             };
         };
     };

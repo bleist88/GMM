@@ -67,7 +67,7 @@ public:
 
     // Interactions.
 
-    void        gravitate( Particles A, Particles B );
+    void        gravitate( Particles A, Particles B, double zero );
     void        collide( Particles A, Particles B );
 
     // Scaling units.

@@ -39,7 +39,15 @@ int main()
     string          out_file    = "";
     stringstream    time_string;
 
+    //  ////////////////////////////////////////////////////////////////////////
     //  get distribution parameters.
+    //
+    //  this section needs to be allocated to another function in another file.
+    //
+    //  1.  read distributions parameters file.
+    //  2.  read input distribution files.
+    //  3.  place them into a single distributions file.
+    //      -   should they get some sort of marker to indicate the input file?
 
     int                 dist_count  = count_lines("Distributions");
 
@@ -75,6 +83,8 @@ int main()
 
     };
 
+    //  ////////////////////////////////////////////////////////////////////////
+
     //  initialize interaction manager.
 
     Interactions interactions;
@@ -96,8 +106,10 @@ int main()
         //  calculate acceleration for each distribution.
 
         for( int i = 0; i < dist_count; i++ ){
-            for( int j = 0; j < dist_count; j++ ){
-                interactions.gravitate( distributions[i], distributions[j] );
+            for( int j = i; j < dist_count; j++ ){
+                interactions.gravitate(
+                    distributions[i], distributions[j], 1e-16
+                );
             };
         };
 

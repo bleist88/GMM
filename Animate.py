@@ -18,20 +18,20 @@ interval        = 30
 speed           = 5
 
 distributions   = [
-    "Output/System_1/",
-    "Output/System_2/",
-    #"Output/Disk1/",
-    #"Output/Spheroid1/",
-    #"Output/Disk2/",
-    #"Output/Spheroid2/",
+    #"Output/System_1/",
+    #"Output/System_2/",
+    "Output/Disk1/",
+    "Output/Spheroid1/",
+    "Output/Disk2/",
+    "Output/Spheroid2/",
     #"Output/Spheroid3/",
     ]
 
 markers         = [
-    "wo","ro","bo","mo", "bo","yo","bo","yo","ro"
+    "ko","ko","bo","mo", "bo","yo","bo","yo","ro"
     ]
 
-markersize      = 5
+markersize      = 3
 alpha           = .6
 
 ################################################################################
@@ -45,7 +45,7 @@ ax.set_xlim3d( -box_size, box_size )
 ax.set_ylim3d( -box_size, box_size )
 ax.set_zlim3d( -box_size, box_size )
 
-ax.set_axis_bgcolor('black')
+ax.set_axis_bgcolor('white')
 ax.axis('off')
 
 frames  = int( len(os.listdir(distributions[0]))/speed ) - 1

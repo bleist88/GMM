@@ -10,13 +10,13 @@
 
 ##  ########################################################################  ##
 ##  Galaxy Formation
-#Input/Disk_clumps.dat        Output/Disk1/           0e12      0e10   0e10   0e-10    0e-10   0e-10
-#Input/Spheroid.dat           Output/Spheroid1/	    0e12      0e10   0e10   0e-10    0e-10   0e-10
-#Input/Disk_clumps.dat		 Output/Disk2/		   -1e12     -5e10    2e10    0       3e-7    0
-#Input/Spheroid_dark.dat      Output/Spheroid2/      -1e12     -5e10    2e10    0       3e-7    0
+Input/Disk_clumps.dat        Output/Disk1/           0e12      0e10   0e10   0e-10    0e-10   0e-10
+Input/Spheroid.dat           Output/Spheroid1/	    0e12      0e10   0e10   0e-10    0e-10   0e-10
+Input/Disk_clumps.dat		 Output/Disk2/		   -1e12     -5e10    2e10    0       3e-7    0
+Input/Spheroid_dark.dat      Output/Spheroid2/      -1e12     -5e10    2e10    0       3e-7    0
 #Input/Spheroid.dat          Output/Spheroid3/       1e12     -3e10    3e6    -1e-9    1e-9   -6e-8
 
 ##  ########################################################################  ##
 ##  Solar System
-Input/solar_system.dat      Output/System_1/    0   0   0       0   0   0
-Input/solar_system.dat      Output/System_2/        2000000000000 2000000000000 2000000000000     -100  -10000  -1000
+#Input/solar_system.dat      Output/System_1/    0   0   0       0   0   0
+#Input/solar_system.dat      Output/System_2/        2000000000000 2000000000000 200000000000     -1000  -1000  -1000
