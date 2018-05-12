@@ -1,4 +1,4 @@
-#include "../Include/Interactions.hh"
+#include "Interactions.hh"
 
 #include <iostream>
 #include <cstdlib>
@@ -9,12 +9,13 @@
 
 using namespace std;
 
-#include "../Include/Vector.hh"
-#include "../Include/Vectors.hh"
-#include "../Include/Particle.hh"
-#include "../Include/Particles.hh"
+#include "Vector.hh"
+#include "Vectors.hh"
+#include "Particle.hh"
+#include "Particles.hh"
 
-//////////////////////////////////////////////////////   C O N S T R U C T O R S
+//  ////////////////////////////////////////////////////////////////////////////
+//  Constructors
 
 Interactions :: Interactions()
 {
@@ -30,12 +31,14 @@ Interactions :: Interactions()
 
 Interactions :: ~Interactions(){};
 
-////////////////////////////////////////////////////////////////   M E M B E R S
+//  ////////////////////////////////////////////////////////////////////////////
+//  Members
 
 
-////////////////////////////////////////////////////////////////   M E T H O D S
+//  ////////////////////////////////////////////////////////////////////////////
+//  Methods
 
-// Calculations.
+//  calculations.
 
 void        Interactions :: calc_radial( Particle A, Particle B )
 {
@@ -62,15 +65,12 @@ void        Interactions :: gravitate( Particles A, Particles B )
         for( int j = 0; j < B.size(); j++ ){
 
             calc_radial( A.particle(i), B.particle(j) );
-            calc_masses( A.particle(i), B.particle(j) );
 
             if( _radial.mag() > 0.0 ){
 
-                _radial.scale( _G / pow(_radial.mag(),3) );
-
-                A.acceleration(i).add( _radial.scaled( _mass_b ) );
-                B.acceleration(j).add( _radial.scaled( _mass_a ) );
-
+                A.acceleration(i).add(
+                    _radial.scaled( _G * B.mass(j) / pow(_radial.mag(), 3) )
+                );
             };
         };
     };
@@ -96,29 +96,21 @@ void        Interactions :: collide( Particles A, Particles B )
 void        Interactions :: scale_time( double factor )
 {
     _unit_t     *= factor;
-    _G          *= pow( factor, 2 );
-    _k          *= pow( factor, 2 );
 }
 
 void        Interactions :: scale_length( double factor )
 {
     _unit_l     *= factor;
-    _G          *= 1. / pow( factor, 3 );
-    _k          *= pow( factor, 2 );
-    _R          *= pow( factor, 3 );
 }
 
 void        Interactions :: scale_mass( double factor )
 {
     _unit_m     *= factor;
-    _G          *= factor;
-    _k          *= factor;
 }
 
 void        Interactions :: scale_temperature( double factor )
 {
     _unit_T     *= factor;
-    _k          *= 1. / factor;
 }
 
 //////////////////////////////////////////////////////////////////   O U T P U T

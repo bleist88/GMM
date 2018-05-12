@@ -1,4 +1,4 @@
-#include "../Include/Particle.hh"
+#include "Particle.hh"
 
 #include <iostream>
 #include <cstdlib>
@@ -9,8 +9,8 @@
 
 using namespace std;
 
-#include "../Include/Vector.hh"
-#include "../Include/Vectors.hh"
+#include "Vector.hh"
+#include "Vectors.hh"
 
 //////////////////////////////////////////////////////   C O N S T R U C T O R S
 
@@ -180,7 +180,7 @@ void        Particle :: propagate( double dt )
     _position.e2() += dt * _velocity.get_e2();
     _position.e3() += dt * _velocity.get_e3();
 
-    _acceleration.set( 0, 0, 0 );
+//    _acceleration.set( 0, 0, 0 );
 }
 
 //////////////////////////////////////////////////////////////////   O U T P U T

@@ -1,4 +1,4 @@
-#include "../Include/Vectors.hh"
+#include "Vectors.hh"
 
 #include <iostream>
 #include <cstdlib>
@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#include "../Include/Vector.hh"
+#include "Vector.hh"
 
 //////////////////////////////////////////////////////   C O N S T R U C T O R S
 

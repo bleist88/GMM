@@ -1,4 +1,4 @@
-#include "../Include/Particles.hh"
+#include "Particles.hh"
 
 #include <iostream>
 #include <cstdlib>
@@ -9,9 +9,9 @@
 
 using namespace std;
 
-#include "../Include/Vector.hh"
-#include "../Include/Vectors.hh"
-#include "../Include/Particle.hh"
+#include "Vector.hh"
+#include "Vectors.hh"
+#include "Particle.hh"
 
 //////////////////////////////////////////////////////   C O N S T R U C T O R S
 
@@ -224,7 +224,10 @@ void        Particles :: populate( int e, double a, double b )
 
 void        Particles :: propagate( double dt )
 {
-    for( int i = 0; i < _size; i++ ) _particle[i].propagate( dt );
+    for( int i = 0; i < _size; i++ ){
+        _particle[i].propagate( dt );
+        _particle[i].set_acceleration( 0, 0, 0 );
+    };
 }
 
 void        Particles :: move( double x, double y, double z )

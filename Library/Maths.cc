@@ -1,4 +1,4 @@
-#include "../Include/Maths.hh"
+#include "Maths.hh"
 
 #include <iostream>
 #include <cstdlib>

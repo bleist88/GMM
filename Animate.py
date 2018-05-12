@@ -12,24 +12,26 @@ import Io
 
 ## User Variables.
 
-box_size        = 2e12
+box_size        = 1e12
 
 interval        = 30
 speed           = 5
 
 distributions   = [
-    "Output/Disk1/",
-    "Output/Spheroid1/",
-    "Output/Disk2/",
-    "Output/Spheroid2/",
-    "Output/Spheroid3/",
+    "Output/System_1/",
+    "Output/System_2/",
+    #"Output/Disk1/",
+    #"Output/Spheroid1/",
+    #"Output/Disk2/",
+    #"Output/Spheroid2/",
+    #"Output/Spheroid3/",
     ]
 
 markers         = [
-    "bo","yo","bo","yo","ro"
+    "wo","ro","bo","mo", "bo","yo","bo","yo","ro"
     ]
 
-markersize      = 2
+markersize      = 5
 alpha           = .6
 
 ################################################################################

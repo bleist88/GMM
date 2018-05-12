@@ -22,12 +22,11 @@ using namespace std;
 
 int main()
 {
-    // Splash.
+    //  splash.
 
-    cout << endl;
-    cout << "N - B o d y   S i m u l a t i o n" << endl;
+    cout << endl << "N - B o d y   S i m u l a t i o n" << endl << endl;
 
-    // Get configuration parameters.
+    //  get configuration parameters.
 
     double          unit_t      = atof( get_config( "unit_t", "Configs" ).c_str() );
     double          unit_l      = atof( get_config( "unit_l", "Configs" ).c_str() );
@@ -40,7 +39,7 @@ int main()
     string          out_file    = "";
     stringstream    time_string;
 
-    // Get distribution parameters.
+    //  get distribution parameters.
 
     int                 dist_count  = count_lines("Distributions");
 
@@ -64,7 +63,7 @@ int main()
         vz[i]       = atof( get_dist( i, "vz", "Distributions" ).c_str() );
     };
 
-    // Instantiate distributions of particles.
+    //  instantiate distributions of particles.
 
     vector<Particles>       distributions(dist_count);
 
@@ -76,7 +75,7 @@ int main()
 
     };
 
-    // Initialize interaction manager.
+    //  initialize interaction manager.
 
     Interactions interactions;
 
@@ -84,24 +83,31 @@ int main()
     interactions.scale_length( unit_l );
     interactions.scale_mass( unit_m );
 
-    // Iterate through time.
-    // Iterate twice through each distribution.
-    // Iteract each distribution with all others including itself.
+    //  iterate through time.
+    //  interact each distribution with all others.
 
     for( int t = 0; t < sim_time; t++ ){
 
-        cout << "\r" << "Time: " << t;  cout.flush();
+        //  splash.
+
+        cout << "\r" << "Time: " << t << "    " << t * unit_t << "  s";
+        cout.flush();
+
+        //  calculate acceleration for each distribution.
+
+        for( int i = 0; i < dist_count; i++ ){
+            for( int j = 0; j < dist_count; j++ ){
+                interactions.gravitate( distributions[i], distributions[j] );
+            };
+        };
+
+        //  propagate using     dx = v * dt.
 
         for( int i = 0; i < dist_count; i++ ){
 
-            for( int j = 0; j < dist_count; j++ ){
-                interactions.gravitate( distributions[i], distributions[j] );
-                //interactions.collide( distributions[i], distributions[j] );
-            };
-
             distributions[i].propagate( unit_t );
 
-            // Output.
+            // output.
 
             out_file.clear();
             time_string.str("");

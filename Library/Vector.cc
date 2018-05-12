@@ -1,4 +1,4 @@
-#include "../Include/Vector.hh"
+#include "Vector.hh"
 
 #include <iostream>
 #include <cstdlib>
