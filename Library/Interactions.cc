@@ -34,94 +34,75 @@ Interactions :: ~Interactions(){};
 //  ////////////////////////////////////////////////////////////////////////////
 //  Members
 
+void        Interactions :: set_time( double unit_t )
+{
+    _unit_t         = unit_t;
+    _G             *= pow(unit_t, 2);
+    _k             *= pow(unit_t, 2);
+}
+
+void        Interactions :: set_length( double unit_l )
+{
+    _unit_l         = unit_l;
+    _G             *= 1 / pow(unit_l, 3);
+    _k             *= 1 / pow(unit_l, 3);
+}
+
+void        Interactions :: set_mass( double unit_m )
+{
+    _unit_m         = unit_m;
+    _G             *= unit_m;
+}
+
+void        Interactions :: set_temperature( double unit_T )
+{
+    _unit_T         = unit_T;
+}
 
 //  ////////////////////////////////////////////////////////////////////////////
 //  Methods
 
-//  calculations.
+//  calculations
 
 void        Interactions :: calc_radial( Particle A, Particle B )
 {
     _radial     = B.position().subtracted( A.position() );
 }
 
-void        Interactions :: calc_masses( Particle A, Particle B )
+//  interactions
+
+void        Interactions :: gravitate( Particles particles )
 {
-    _mass_a     = A.mass() * exp( -pow(_radial.mag()/A.body(),2) );
-    _mass_b     = B.mass() * exp( -pow(_radial.mag()/B.body(),2) );
-}
+    for( int i = 0; i < particles.size(); i++ ){
+        for( int j = i+1; j < particles.size(); j++ ){
+            
+            calc_radial( particles.particle(i), particles.particle(j) );
 
-void        Interactions :: calc_bumps( Particle A, Particle B )
-{
-    _bump_a     = pow( _mass_a / A.mass(), 3 );
-    _bump_b     = pow( _mass_b / B.mass(), 3 );
-}
+            particles.acceleration(i).add(
+                _radial.scaled(
+                _G * particles.mass(j) * (1 - exp( -pow(_radial.mag()/particles.body(j), 2) ))  / pow(_radial.mag(), 3)
+                )
+            );
 
-// Interactions.
-
-void        Interactions :: gravitate( Particles A, Particles B, double zero )
-{
-    for( int i = 0; i < A.size(); i++ ){
-        for( int j = 0; j < B.size(); j++ ){
-
-            calc_radial( A.particle(i), B.particle(j) );
-
-            if( _radial.mag() > 0.0 ){
-
-                A.acceleration(i).add(
-                    _radial.scaled(
-                        (_radial.mag() / (_radial.mag() + zero)) *
-                            _G * B.mass(j) / pow(_radial.mag(), 3)
-                    )
-                );
-
-                B.acceleration(i).add(
-                    _radial.scaled(
-                        (_radial.mag() / (_radial.mag() + zero)) *
-                            _G * A.mass(j) / pow(_radial.mag(), 3)
-                    )
-                );
-
-            };
+            particles.acceleration(j).add(
+                _radial.scaled(
+                -_G * particles.mass(i) * (1 - exp( -pow(_radial.mag()/particles.body(i), 2) )) / pow(_radial.mag(), 3)
+                )
+            );
         };
     };
 }
 
-void        Interactions :: collide( Particles A, Particles B )
+void        Interactions :: collide( Particles particles )
 {
-    for( int i = 0; i < A.size(); i++ ){
-        for( int j = 0; j < B.size(); j++ ){
-
-            calc_radial( A.particle(i), B.particle(j) );
-            calc_masses( A.particle(i), B.particle(j) );
-
-            A.acceleration(i).add( B.velocity(j).scaled(_bump_b/_unit_t) );
-            B.acceleration(j).add( B.velocity(i).scaled(_bump_b/_unit_t) );
+    for( int i = 0; i < particles.size(); i++ ){
+        for( int j = i+1; j < particles.size(); j++ ){
+            
+            particles.acceleration(i).scale( (1 - exp( -_radial.mag() * _radial.mag() / particles.body(i) / particles.body(j) )) );
+            particles.acceleration(j).scale( (1 - exp( -_radial.mag() * _radial.mag() / particles.body(i) / particles.body(j) )) );
 
         };
     };
-}
-
-// Scaling units.
-
-void        Interactions :: scale_time( double factor )
-{
-    _unit_t     *= factor;
-}
-
-void        Interactions :: scale_length( double factor )
-{
-    _unit_l     *= factor;
-}
-
-void        Interactions :: scale_mass( double factor )
-{
-    _unit_m     *= factor;
-}
-
-void        Interactions :: scale_temperature( double factor )
-{
-    _unit_T     *= factor;
 }
 
 //////////////////////////////////////////////////////////////////   O U T P U T

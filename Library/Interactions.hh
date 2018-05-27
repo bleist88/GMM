@@ -48,8 +48,6 @@ private:
 
     Vector      _radial;
     Vector      _acceleration;
-    double      _mass_a, _mass_b;
-    double      _bump_a, _bump_b;
 
 public:
 
@@ -58,24 +56,22 @@ public:
 private:
 
 public:
+    
+    //  units
 
-    // Calculations.
+    void        set_time( double unit_t );
+    void        set_length( double unit_l );
+    void        set_mass( double unit_m );
+    void        set_temperature( double unit_T );
+
+    //  calculations
 
     void        calc_radial( Particle A, Particle B );
-    void        calc_masses( Particle A, Particle B );
-    void        calc_bumps( Particle A, Particle B );
 
-    // Interactions.
+    //  interactions
 
-    void        gravitate( Particles A, Particles B, double zero );
-    void        collide( Particles A, Particles B );
-
-    // Scaling units.
-
-    void        scale_time( double factor );
-    void        scale_length( double factor );
-    void        scale_mass( double factor );
-    void        scale_temperature( double factor );
+    void        gravitate( Particles particles );
+    void        collide( Particles particles );
 
 //////////////////////////////////////////////////////////////////   O U T P U T
 

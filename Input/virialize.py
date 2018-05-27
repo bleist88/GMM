@@ -11,17 +11,15 @@ from    __imports__ import *
 ################################################################################
 
 files   = [
-    "disk.dat",
-    "disk_clumps.dat",
-    "spheroid.dat",
-    "spheroid_clumps.dat"
+    "disk.dat", "randy.dat", "randy_disk.dat"
 ]
 
 G       = 6.67e-11
+Av      = 0.1
 
 unit_t  = 1e14            # s     -> 10*Myr = 6.14e13
 unit_l  = 3.10e16         # m     -> pc
-unit_m  = 1.99e30         # kg    -> solar
+unit_m  = 1.989e30         # kg    -> solar
 
 ################################################################################
 
@@ -41,7 +39,6 @@ for f in files:
     M   = unit_m * np.sum( dat["mass"] )
 
     ##  calculate the magnitude of tangential velocity for each particle.
-    ##  ac  = v**2 / r  = G * M / r**2
 
     r   = unit_l * np.sqrt( dat["x"]**2 + dat["y"]**2 + dat["z"]**2 )
     v   = np.sqrt( G * M / r )
@@ -50,12 +47,9 @@ for f in files:
     ##  scale the velocity to give the velocity above.
     ##  v   = a * V     =>      a   = v / V
 
-    V   = np.sqrt( dat["vx"]**2 + dat["vy"]**2 + dat["vz"]**2 )
-    a   = V / v
-
-    dat["vx"]   *=  a
-    dat["vy"]   *=  a
-    dat["vz"]   *=  a
+    dat["vx"]   *=  Av * np.sqrt(1/3) * v
+    dat["vy"]   *=  Av * np.sqrt(1/3) * v
+    dat["vz"]   *=  Av * np.sqrt(1/3) * v
 
     ##  write the file.
 

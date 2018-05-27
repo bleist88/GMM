@@ -3,18 +3,25 @@
 ##  ########################################################################  ##
 ##  Galaxy Formation
 
-unit_t      1e14            # s     -> 10*Myr = 6.14e13
-unit_l      3.10e16         # m     -> pc
-unit_m      1.99e30         # kg    -> solar
+#dt           1               #       ->  1 Myr
+#unit_t       6.14e13         # s     ->  1 Myr = 3.154e13 s
+#unit_l       3.10e16         # m     ->  1 pc  = 3.086e16 m
+#unit_m       1.99e30         # kg    ->  1 Ms  = 1.989e30 kg
 
-sim_time    5e5             # number of time iterations
-out_freq    3               # frequency of write out
+#sim_time     5e5             # number of time iterations
+#out_freq     3               # frequency of write out
+
+#in_file      Input/randy_disk.dat
+#out_dir      Output/randy_disk/
 
 ##  ########################################################################  ##
 ##  Solar System
 
-#unit_t      86400       ##  1 h     = 3600 s
-#unit_l      1           ##  1 km    = 1000 m
-#unit_m      1           ##  1 kg    =    1 kg
-#sim_time    10000
-#out_freq    3
+dt            1
+unit_t       86400       ##  1 h     = 3600 s
+unit_l       1           ##  1 km    = 1000 m
+unit_m       1           ##  1 kg    =    1 kg
+sim_time     10000
+out_freq     3
+in_file      Input/solar_system.dat
+out_dir      Output/solar_system/

@@ -12,29 +12,22 @@ import Io
 
 ## User Variables.
 
-box_size        = 1e12
+box_size        = 3e25
 
-interval        = 30
-speed           = 5
+interval        = 85
+step            = 1
 
-distributions   = [
-    #"Output/System_1/",
-    #"Output/System_2/",
-    "Output/Disk1/",
-    "Output/Spheroid1/",
-    "Output/Disk2/",
-    "Output/Spheroid2/",
-    #"Output/Spheroid3/",
-    ]
+color           = "black"
+size            = 3
+alpha           = 0.6
 
-markers         = [
-    "ko","ko","bo","mo", "bo","yo","bo","yo","ro"
-    ]
-
-markersize      = 3
-alpha           = .6
+out_dir         = "Output/solar_system/"
 
 ################################################################################
+
+##  determine box size again.
+
+box_size        = 1.5 * np.max( Io.read( out_dir + "0.dat" )["x"] )
 
 ## Figure initialization.
 
@@ -48,54 +41,34 @@ ax.set_zlim3d( -box_size, box_size )
 ax.set_axis_bgcolor('white')
 ax.axis('off')
 
-frames  = int( len(os.listdir(distributions[0]))/speed ) - 1
+plot  = ax.scatter3D( [], [], [], c=color, s=size, depthshade=False )
+
+frames  = int( len(os.listdir(out_dir)) )
 
 ## Animation initialization.
 
-points  = []
-
-for i in range(len(distributions)):
-
-    plot, = ax.plot(
-        [],[],[], markers[i],
-        markersize=markersize, alpha=alpha
-        )
-
-    points.append( plot )
-
 def init():
 
-    for i in range(len(distributions)):
+    plot.set_data([],[])
+    plot.set_3d_properties([])
 
-        points[i].set_data([],[])
-        points[i].set_3d_properties([])
-
-    plots = points[0],
-    for i in range(1,len(distributions)):
-        plots += points[i],
-
-    return plots
+    return plot
 
 def animate(t):
 
-    data    = [
-        Io.read( dist + str(speed*t) + '.dat' ) for dist in distributions
-        ]
+    dat                 = Io.read( out_dir + str(step * t) + ".dat" )
 
-    for i in range(len(data)):
+    plot._offsets3d     = ( dat["x"], dat["y"], dat["z"] )
 
-        points[i].set_data( data[i]['x'], data[i]['y'] )
-        points[i].set_3d_properties( data[i]['z'] )
-
-    plots = points[0],
-    for i in range(1,len(distributions)):
-        plots += points[i],
-
-    return plots
+    return  plot
 
 anime   = animation.FuncAnimation(
-                fig, animate, init_func=init,
-                frames=frames, interval=interval, #blit=True
-                )
+            fig, animate, frames=frames, interval=interval #, blit=True
+        )
+
+# Set up formatting for the movie files
+#Writer = animation.writers['ffmpeg']
+#writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+#anime.save( gif, writer="ffmpeg" )
 
 mpl.show()

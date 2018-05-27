@@ -263,6 +263,7 @@ void        Particles :: write( string file_name )
     out_file << "#<  vx          float64" << endl;
     out_file << "#<  vy          float64" << endl;
     out_file << "#<  vz          float64" << endl;
+
     for( int i = 0; i < _size; i++ ){ _particle[i].write( out_file ); };
 
     out_file.close();

@@ -26,6 +26,7 @@ public:
     Particles();
     Particles( int size );
     Particles( string file_name );
+    Particles( vector<string> file_names );
     virtual ~Particles();
 
 ////////////////////////////////////////////////////////////////   M E M B E R S

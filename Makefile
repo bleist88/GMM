@@ -1,9 +1,9 @@
 
 compile:
-	g++ -o Simulation Library/Main.C
+	g++ -o Simulation Library/Simulation.C
 
 animate:
-	python Animate.py
+	python animate.py
 
 clean:
 	python clean.py
