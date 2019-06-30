@@ -1,12 +1,14 @@
 ###   S i m u l a t i o n   A n i m a t i o n
 
-import os
-import numpy as np
-from matplotlib import pyplot as mpl
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import animation
+from astrolib.imports import *
 
-import Io
+#import os
+#import numpy as np
+#from matplotlib import pyplot as mpl
+#from mpl_toolkits.mplot3d import Axes3D
+#from matplotlib import animation
+
+#import Io
 
 ################################################################################
 
@@ -27,7 +29,7 @@ out_dir         = "Output/solar_system/"
 
 ##  determine box size again.
 
-box_size        = 1.5 * np.max( Io.read( out_dir + "0.dat" )["x"] )
+box_size        = 1.5 * np.max( io.read( out_dir + "0.dat" )["x"] )
 
 ## Figure initialization.
 
@@ -56,7 +58,7 @@ def init():
 
 def animate(t):
 
-    dat                 = Io.read( out_dir + str(step * t) + ".dat" )
+    dat                 = io.read( out_dir + str(step * t) + ".dat" )
 
     plot._offsets3d     = ( dat["x"], dat["y"], dat["z"] )
 
